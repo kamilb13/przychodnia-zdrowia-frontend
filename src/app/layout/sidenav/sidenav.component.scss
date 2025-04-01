@@ -1,0 +1,23 @@
+mat-nav-list {
+  padding-top: 0;
+
+  a {
+    color: white;
+
+    mat-icon {
+      margin-right: 10px;
+    }
+
+    &.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    span{
+      color: white;
+    }
+
+    mat-icon{
+      color: white;
+    }
+  }
+}
