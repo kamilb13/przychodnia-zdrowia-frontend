@@ -10,7 +10,7 @@ import {RouterOutlet} from '@angular/router';
     MatDrawerContainer,
     SidenavComponent,
     RouterOutlet,
-    MatSidenavModule
+    MatSidenavModule,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
