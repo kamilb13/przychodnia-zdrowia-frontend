@@ -5,6 +5,7 @@ import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {NgIf} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-register-patient',
@@ -28,6 +29,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 })
 export class RegisterPatientComponent {
   private _formBuilder = inject(FormBuilder);
+  private http = inject(HttpClient);
 
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
@@ -37,10 +39,21 @@ export class RegisterPatientComponent {
     ssnCtrl: ['', [Validators.minLength(11), Validators.maxLength(11), Validators.required, Validators.pattern('^[0-9]*$')]],
   });
   isLinear = true;
-  protected readonly alert = alert;
 
   addPatient() {
-    //TODO add patient logic
-    console.log("Pacjent dodany do systemu.");
+    const patientData = {
+      name: this.firstFormGroup.value.firstCtrl,
+      surname: this.firstFormGroup.value.surnameCtrl,
+      ssn: this.secondFormGroup.value.ssnCtrl
+    };
+    this.http.post('http://localhost:8080/register-patient', patientData).subscribe({
+      next: (response) => {
+        console.log('Pacjent dodany:', response);
+      },
+      error: (error) => {
+        console.error('Błąd dodawania pacjenta:', error);
+        //TODO dodac obsluge bledow widoczna dla uzytkownika
+      }
+    });
   }
 }

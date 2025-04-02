@@ -41,7 +41,7 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Podsumowanie</ng-template>
-    <p>Twoje dane:</p>
+    <p>Dane nowego pacjenta:</p>
     <ul>
       <li><strong>Imię:</strong> {{ firstFormGroup.value.firstCtrl }}</li>
       <li><strong>Nazwisko:</strong> {{ firstFormGroup.value.surnameCtrl }}</li>
@@ -50,7 +50,7 @@
     <div>
       <button mat-button matStepperPrevious>Wstecz</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="addPatient()">Zarejestruj nowego pacjenta</button>
+      <button mat-button (click)="addPatient()">Zarejestruj nowego pacjenta</button> <!--TODO po dodaniu pacjenta przycisk ma zniknąć -->
     </div>
   </mat-step>
 </mat-stepper>
