@@ -41,24 +41,11 @@ export class RegisterPatientComponent {
   isLinear = true;
 
   addPatient() {
-    //TODO add patient logic
-    console.log("Imie pacjenta: ", this.firstFormGroup.value.firstCtrl);
-    console.log("Nazwisko pacjenta: ", this.firstFormGroup.value.surnameCtrl);
-    console.log("Nazwisko pacjenta: ", this.secondFormGroup.value.ssnCtrl);
-
     const patientData = {
       name: this.firstFormGroup.value.firstCtrl,
       surname: this.firstFormGroup.value.surnameCtrl,
       ssn: this.secondFormGroup.value.ssnCtrl
     };
-    console.log(patientData);
-    /*
-    {
-  "name": "Jan",
-  "surname": "Nowak",
-  "ssn": "11111111120"
-}
-     */
     this.http.post('http://localhost:8080/register-patient', patientData).subscribe({
       next: (response) => {
         console.log('Pacjent dodany:', response);

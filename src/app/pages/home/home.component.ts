@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
+import {AllPatientsComponent} from '../all-patients/all-patients.component';
 
 @Component({
   standalone: true,
@@ -8,7 +9,8 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
     MatCard,
     MatCardTitle,
     MatCardHeader,
-    MatCardContent
+    MatCardContent,
+    AllPatientsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
