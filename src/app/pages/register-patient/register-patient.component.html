@@ -1,17 +1,15 @@
 <p>register-patient works!</p>
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup">
+  <mat-step [stepControl]="firstFormGroup" label="Uzupełnij imię i nazwisko pacjenta">
     <form [formGroup]="firstFormGroup">
       <div style="display: flex; flex-direction: column; align-items: flex-start">
-        <ng-template matStepLabel>Fill out your name</ng-template>
         <mat-form-field>
           <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          <input matInput placeholder="First name" formControlName="firstCtrl" required>
         </mat-form-field>
-        <ng-template matStepLabel>Fill out your surname</ng-template>
         <mat-form-field>
           <mat-label>Surname</mat-label>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+          <input matInput placeholder="Last name" formControlName="surnameCtrl" required>
         </mat-form-field>
       </div>
       <div>
@@ -19,12 +17,21 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+  <mat-step [stepControl]="secondFormGroup" label="Uzupełnij pesel pacjenta">
     <form [formGroup]="secondFormGroup">
       <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+        <mat-label>Ssn</mat-label>
+        <input matInput formControlName="ssnCtrl" placeholder="12345678912"
                required>
+        <mat-error *ngIf="secondFormGroup.get('ssnCtrl')?.hasError('required')">
+          PESEL jest wymagany.
+        </mat-error>
+        <mat-error *ngIf="secondFormGroup.get('ssnCtrl')?.hasError('minlength')">
+          PESEL musi mieć dokładnie 11 cyfr.
+        </mat-error>
+        <mat-error *ngIf="secondFormGroup.get('ssnCtrl')?.hasError('maxlength')">
+          PESEL musi mieć dokładnie 11 cyfr.
+        </mat-error>
       </mat-form-field>
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -33,11 +40,17 @@
     </form>
   </mat-step>
   <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
+    <ng-template matStepLabel>Podsumowanie</ng-template>
+    <p>Twoje dane:</p>
+    <ul>
+      <li><strong>Imię:</strong> {{ firstFormGroup.value.firstCtrl }}</li>
+      <li><strong>Nazwisko:</strong> {{ firstFormGroup.value.surnameCtrl }}</li>
+      <li><strong>PESEL:</strong> {{ secondFormGroup.value.ssnCtrl }}</li>
+    </ul>
     <div>
-      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperPrevious>Wstecz</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
+      <button mat-button (click)="addPatient()">Zarejestruj nowego pacjenta</button>
     </div>
   </mat-step>
 </mat-stepper>
