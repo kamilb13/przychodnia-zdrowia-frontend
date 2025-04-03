@@ -1,26 +1,26 @@
-<p>register-patient works!</p>
+<h3>Dodaj nowego pacjenta</h3>
 <mat-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="firstFormGroup" label="Uzupełnij imię i nazwisko pacjenta">
     <form [formGroup]="firstFormGroup">
       <div style="display: flex; flex-direction: column; align-items: flex-start">
         <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="First name" formControlName="firstCtrl" required>
+          <mat-label>Imie</mat-label>
+          <input matInput placeholder="Imie" formControlName="firstCtrl" required>
         </mat-form-field>
         <mat-form-field>
-          <mat-label>Surname</mat-label>
-          <input matInput placeholder="Last name" formControlName="surnameCtrl" required>
+          <mat-label>Nazwisko</mat-label>
+          <input matInput placeholder="Nazwisko" formControlName="surnameCtrl" required>
         </mat-form-field>
       </div>
       <div>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperNext>Dalej</button>
       </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="secondFormGroup" label="Uzupełnij pesel pacjenta">
     <form [formGroup]="secondFormGroup">
       <mat-form-field>
-        <mat-label>Ssn</mat-label>
+        <mat-label>Pesel</mat-label>
         <input matInput formControlName="ssnCtrl" placeholder="12345678912"
                required>
         <mat-error *ngIf="secondFormGroup.get('ssnCtrl')?.hasError('required')">
@@ -34,8 +34,8 @@
         </mat-error>
       </mat-form-field>
       <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
+        <button mat-button matStepperPrevious>Wstecz</button>
+        <button mat-button matStepperNext>Dalej</button>
       </div>
     </form>
   </mat-step>
