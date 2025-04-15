@@ -46,7 +46,7 @@ export class RegisterPatientComponent {
       surname: this.firstFormGroup.value.surnameCtrl,
       ssn: this.secondFormGroup.value.ssnCtrl
     };
-    this.http.post('http://localhost:8080/register-patient', patientData).subscribe({
+    this.http.post('http://localhost:8080/patients', patientData).subscribe({
       next: (response) => {
         console.log('Pacjent dodany:', response);
       },
