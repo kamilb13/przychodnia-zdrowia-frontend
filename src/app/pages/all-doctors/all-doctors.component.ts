@@ -3,29 +3,30 @@ import {MatPaginator} from '@angular/material/paginator';
 import {HttpClient} from '@angular/common/http';
 
 import {
-  MatCell,
-  MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderRow,
-  MatHeaderRowDef,
-  MatRow, MatRowDef, MatTable, MatTableDataSource
+    MatCell,
+    MatCellDef,
+    MatColumnDef,
+    MatHeaderCell, MatHeaderCellDef,
+    MatHeaderRow,
+    MatHeaderRowDef,
+    MatRow, MatRowDef, MatTable, MatTableDataSource
 } from '@angular/material/table';
 
 @Component({
   selector: 'app-all-doctors',
-  imports: [
-    MatCell,
-    MatCellDef,
-    MatColumnDef,
-    MatHeaderCell,
-    MatHeaderRow,
-    MatHeaderRowDef,
-    MatPaginator,
-    MatRow,
-    MatRowDef,
-    MatTable
-  ],
+    imports: [
+        MatCell,
+        MatCellDef,
+        MatColumnDef,
+        MatHeaderCell,
+        MatHeaderRow,
+        MatHeaderRowDef,
+        MatPaginator,
+        MatRow,
+        MatRowDef,
+        MatTable,
+        MatHeaderCellDef
+    ],
   templateUrl: './all-doctors.component.html',
   styleUrl: './all-doctors.component.scss'
 })
@@ -33,7 +34,7 @@ import {
 export class AllDoctorsComponent implements OnInit {
   private http = inject(HttpClient);
   patients: any[] = [];
-  displayedColumns: string[] = ['id', 'name', 'surname', 'ssn'];
+  displayedColumns: string[] = ['id', 'name', 'surname'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
