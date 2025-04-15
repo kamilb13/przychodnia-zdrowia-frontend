@@ -42,9 +42,9 @@ export class AllPatientsComponent implements OnInit {
   }
 
   getAllPatients() {
-    this.http.get<any[]>('http://localhost:8080/get-patients').subscribe({
+    this.http.get<any[]>('http://localhost:8080/patients').subscribe({
       next: (response) => {
-        console.log('Pacjennci:', response);
+        console.log('Pacjenci:', response);
         this.patients = response;
         this.dataSource.data = response;
         this.dataSource.paginator = this.paginator;
