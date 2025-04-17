@@ -43,6 +43,7 @@ export class AddDoctorComponent {
     this.http.post('http://localhost:8080/doctors', doctorData).subscribe({
       next: (response) => {
         console.log('Doktor dodany:', response);
+        alert("Dodano doktora")
       },
       error: (error) => {
         console.error('Błąd dodawania doktora:', error);

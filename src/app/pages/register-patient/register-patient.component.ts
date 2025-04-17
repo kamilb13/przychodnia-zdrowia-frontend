@@ -49,6 +49,7 @@ export class RegisterPatientComponent {
     this.http.post('http://localhost:8080/patients', patientData).subscribe({
       next: (response) => {
         console.log('Pacjent dodany:', response);
+        alert("Dodano pacjenta")
       },
       error: (error) => {
         console.error('Błąd dodawania pacjenta:', error);
