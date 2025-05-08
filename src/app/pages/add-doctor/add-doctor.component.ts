@@ -29,7 +29,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 })
 export class AddDoctorComponent {
   @ViewChild('stepper') stepper!: MatStepper;
-
   private _formBuilder = inject(FormBuilder);
   private http = inject(HttpClient);
   private snackBar = inject(MatSnackBar);
