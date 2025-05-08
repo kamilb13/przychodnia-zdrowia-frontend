@@ -47,7 +47,9 @@ export class AddDoctorComponent {
     };
     this.http.post('http://localhost:8080/doctors', doctorData).subscribe({
       next: (response) => {
-        this.snackBar.open('Doktor dodany');
+        this.snackBar.open('Doktor został pomyślnie dodany', 'Zamknij', {
+          duration: 3000,
+        });
         this.firstFormGroup.reset();
         this.stepper.reset();
       },
