@@ -2,22 +2,57 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> ID </th>
-    <td mat-cell *matCellDef="let visit"> {{visit.id}} </td>
+    <td mat-cell *matCellDef="let visit">{{visit.id}}</td>
   </ng-container>
 
   <ng-container matColumnDef="healthRecord">
     <th mat-header-cell *matHeaderCellDef> Karta Zdrowia </th>
-    <td mat-cell *matCellDef="let visit"> {{visit.healthRecord}} </td>
+    <td mat-cell *matCellDef="let visit">
+      <ng-container *ngIf="editingVisit?.id === visit.id; else displayHealthRecord">
+        <input matInput [(ngModel)]="editingVisit.healthRecord">
+      </ng-container>
+      <ng-template #displayHealthRecord>
+        {{ visit.healthRecord }}
+      </ng-template>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="patient">
     <th mat-header-cell *matHeaderCellDef> Pacjent </th>
-    <td mat-cell *matCellDef="let visit"> {{visit.patient}} </td>
+    <td mat-cell *matCellDef="let visit">
+      <ng-container *ngIf="editingVisit?.id === visit.id; else displayPatient">
+        <input matInput [(ngModel)]="editingVisit.patient">
+      </ng-container>
+      <ng-template #displayPatient>
+        {{ visit.patient }}
+      </ng-template>
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="doctor">
     <th mat-header-cell *matHeaderCellDef> Doktor </th>
-    <td mat-cell *matCellDef="let visit"> {{visit.doctor}} </td>
+    <td mat-cell *matCellDef="let visit">
+      <ng-container *ngIf="editingVisit?.id === visit.id; else displayDoctor">
+        <input matInput [(ngModel)]="editingVisit.doctor">
+      </ng-container>
+      <ng-template #displayDoctor>
+        {{ visit.doctor }}
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef> Akcje </th>
+    <td mat-cell *matCellDef="let visit">
+      <ng-container *ngIf="editingVisit?.id === visit.id; else showEditButtons">
+        <button mat-button color="primary" (click)="saveVisit()">Zapisz</button>
+        <button mat-button color="warn" (click)="cancelEdit()">Anuluj</button>
+      </ng-container>
+      <ng-template #showEditButtons>
+        <button mat-button color="primary" (click)="startEdit(visit)">Edytuj</button>
+        <button mat-button color="warn" (click)="deleteVisit(visit.id)">Usuń</button>
+      </ng-template>
+    </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

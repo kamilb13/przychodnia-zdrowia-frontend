@@ -59,7 +59,6 @@ export class AllDoctorsComponent implements OnInit {
         this.http.get<any[]>('http://localhost:8080/doctors').subscribe({
             next: (response) => {
                 console.log('Doktorzy:', response);
-                // this.patients = response;
                 const sortedResponse = response.sort((a, b) => a.id - b.id);
                 this.dataSource.data = sortedResponse;
                 this.dataSource.paginator = this.paginator;
