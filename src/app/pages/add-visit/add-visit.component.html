@@ -3,31 +3,67 @@
   <mat-step [stepControl]="firstFormGroup" label="Uzupełnij imię i nazwisko doktora">
     <form [formGroup]="firstFormGroup">
       <div style="display: flex; flex-direction: column; align-items: flex-start">
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Pacjent</mat-label>
+            <input type="text"
+                   placeholder="Wybierz pacjenta"
+                   aria-label="Pacjent"
+                   matInput
+                   required
+                   [formControl]="patientControl"
+                   [matAutocomplete]="autoPatient">
+            <mat-autocomplete
+              autoActiveFirstOption
+              #autoPatient="matAutocomplete"
+              [displayWith]="displayFn">
+              <mat-option *ngFor="let patient of filteredOptions | async" [value]="patient">
+                {{ patient.name }} {{ patient.surname }} Pesel: {{ patient.ssn }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Doktor</mat-label>
+            <input type="text"
+                   placeholder="Wybierz doktora"
+                   aria-label="Doktor"
+                   matInput
+                   required
+                   [formControl]="doctorControl"
+                   [matAutocomplete]="autoDoctor">
+            <mat-autocomplete
+              autoActiveFirstOption
+              #autoDoctor="matAutocomplete"
+              [displayWith]="displayDoctorFn">
+              <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
+                {{ doctor.name }} {{ doctor.surname }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </form>
         <mat-form-field>
-          <mat-label>Imie</mat-label>
-          <input matInput placeholder="Imie" formControlName="firstCtrl" required>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Nazwisko</mat-label>
-          <input matInput placeholder="Nazwisko" formControlName="surnameCtrl" required>
+          <mat-label>Data wizyty</mat-label>
+          <input matInput type="date" placeholder="Data wizyty" formControlName="date" required>
         </mat-form-field>
       </div>
+    </form>
       <div>
         <button mat-button matStepperNext>Dalej</button>
       </div>
-    </form>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Podsumowanie</ng-template>
-    <p>Dane nowego doktora:</p>
-    <ul>
-      <li><strong>Imię:</strong> {{ firstFormGroup.value.firstCtrl }}</li>
-      <li><strong>Nazwisko:</strong> {{ firstFormGroup.value.surnameCtrl }}</li>
-    </ul>
+    <p>Dane nowej wizyty:</p>
+    <p>Pacjent: {{JSON.stringify(firstFormGroup.value.patient)}}</p>
+    <p>Doktor: {{JSON.stringify(firstFormGroup.value.doctor)}}</p>
+    <p>Data wizyty: {{firstFormGroup.value.date}}</p>
     <div>
       <button mat-button matStepperPrevious>Wstecz</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="addVisit()">Zarejestruj nowego doktora</button> <!--TODO po dodaniu doktora przycisk ma zniknąć -->
+      <button mat-button (click)="addVisit()">Zarejestruj nowego doktora</button>
+      <!--TODO po dodaniu doktora przycisk ma zniknąć -->
     </div>
   </mat-step>
 </mat-stepper>
