@@ -11,8 +11,8 @@ import {AllVisitsComponent} from './pages/all-visits/all-visits.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  // { path: 'visits', component: AllVisitsComponent }, //TODO fix visits first
-  // { path: 'visits/new', component: AddVisitComponent }, // TODO fix visits first
+  { path: 'visits', component: AllVisitsComponent },
+  { path: 'visits/new', component: AddVisitComponent },
   { path: 'patients', component: AllPatientsComponent },
   { path: 'patients/new', component: RegisterPatientComponent },
   { path: 'doctors', component: AllDoctorsComponent },

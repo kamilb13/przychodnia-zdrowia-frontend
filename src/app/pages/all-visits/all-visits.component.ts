@@ -4,7 +4,7 @@ import {
   MatCell,
   MatCellDef,
   MatColumnDef,
-  MatHeaderCell,
+  MatHeaderCell, MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef, MatTable,
   MatTableDataSource
 } from '@angular/material/table';
@@ -31,6 +31,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     NgIf,
     ReactiveFormsModule,
     FormsModule,
+    MatHeaderCellDef,
   ],
   templateUrl: './all-visits.component.html',
   styleUrl: './all-visits.component.scss'
