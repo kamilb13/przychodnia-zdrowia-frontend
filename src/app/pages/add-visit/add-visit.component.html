@@ -1,7 +1,7 @@
 <h3>Dodaj nową wizytę</h3>
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="firstFormGroup" label="Uzupełnij imię i nazwisko doktora">
-    <form [formGroup]="firstFormGroup">
+  <mat-step [stepControl]="visitFormGroup" label="Uzupełnij imię i nazwisko doktora">
+    <form [formGroup]="visitFormGroup">
       <div style="display: flex; flex-direction: column; align-items: flex-start">
         <form class="example-form">
           <mat-form-field class="example-full-width">
@@ -11,12 +11,10 @@
                    aria-label="Pacjent"
                    matInput
                    required
-                   [formControl]="patientControl"
+                   formControlName="patient"
                    [matAutocomplete]="autoPatient">
-            <mat-autocomplete
-              autoActiveFirstOption
-              #autoPatient="matAutocomplete"
-              [displayWith]="displayFn">
+            <mat-autocomplete #autoPatient="matAutocomplete" [displayWith]="displayPatientFn"
+                              (optionSelected)="setPatient($event.option.value)">
               <mat-option *ngFor="let patient of filteredOptions | async" [value]="patient">
                 {{ patient.name }} {{ patient.surname }} Pesel: {{ patient.ssn }}
               </mat-option>
@@ -31,12 +29,10 @@
                    aria-label="Doktor"
                    matInput
                    required
-                   [formControl]="doctorControl"
+                   formControlName="doctor"
                    [matAutocomplete]="autoDoctor">
-            <mat-autocomplete
-              autoActiveFirstOption
-              #autoDoctor="matAutocomplete"
-              [displayWith]="displayDoctorFn">
+            <mat-autocomplete #autoDoctor="matAutocomplete" [displayWith]="displayDoctorFn"
+                              (optionSelected)="setDoctor($event.option.value)">
               <mat-option *ngFor="let doctor of filteredDoctors | async" [value]="doctor">
                 {{ doctor.name }} {{ doctor.surname }}
               </mat-option>
@@ -49,16 +45,20 @@
         </mat-form-field>
       </div>
     </form>
-      <div>
-        <button mat-button matStepperNext>Dalej</button>
-      </div>
+    <div>
+      <button mat-button matStepperNext>Dalej</button>
+    </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Podsumowanie</ng-template>
-    <p>Dane nowej wizyty:</p>
-    <p>Pacjent: {{JSON.stringify(firstFormGroup.value.patient)}}</p>
-    <p>Doktor: {{JSON.stringify(firstFormGroup.value.doctor)}}</p>
-    <p>Data wizyty: {{firstFormGroup.value.date}}</p>
+    <h4>Dane nowej wizyty:</h4>
+    <ul>
+      <li><strong>Imię pacjenta:</strong> {{ visitFormGroup.value.patient?.name }}</li>
+      <li><strong>Nazwisko pacjenta:</strong> {{ visitFormGroup.value.patient?.surname }}</li>
+      <li><strong>Imię doktora:</strong> {{ visitFormGroup.value.doctor?.name }}</li>
+      <li><strong>Nazwisko doktora:</strong> {{ visitFormGroup.value.doctor?.surname }}</li>
+      <li><strong>Data wizyty:</strong> {{ visitFormGroup.value.date }}</li>
+    </ul>
     <div>
       <button mat-button matStepperPrevious>Wstecz</button>
       <button mat-button (click)="stepper.reset()">Reset</button>

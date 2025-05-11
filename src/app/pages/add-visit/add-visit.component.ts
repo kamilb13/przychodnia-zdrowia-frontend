@@ -5,9 +5,22 @@ import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from '@angula
 import {MatButton} from '@angular/material/button';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {HttpClient} from '@angular/common/http';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {map, Observable, startWith} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+
+interface Patient {
+  id: number;
+  name: string;
+  surname: string;
+  ssn?: string;
+}
+
+interface Doctor {
+  id: number;
+  name: string;
+  surname: string;
+}
 
 @Component({
   selector: 'app-add-visit',
@@ -29,55 +42,60 @@ import {map, Observable, startWith} from 'rxjs';
     MatOption,
     MatAutocompleteTrigger,
     AsyncPipe,
-    NgForOf,
+    NgForOf
   ],
   templateUrl: './add-visit.component.html',
   styleUrl: './add-visit.component.scss'
 })
 export class AddVisitComponent implements OnInit {
   @ViewChild('stepper') stepper!: MatStepper;
+  protected readonly JSON = JSON;
 
   private _formBuilder = inject(FormBuilder);
   private http = inject(HttpClient);
 
-  patientControl = new FormControl('');
-  doctorControl = new FormControl('');
   patientList: any[] = [];
   doctorList: any[] = [];
   filteredOptions!: Observable<any[]>;
   filteredDoctors!: Observable<any[]>;
 
+  isLinear = true;
+
+  visitFormGroup = this._formBuilder.group({
+    patient: new FormControl<Patient | null>(null, Validators.required),
+    doctor: new FormControl<Doctor | null>(null, Validators.required),
+    date: new FormControl<string | null>('', Validators.required),
+  });
+
   ngOnInit() {
     this.getAllPatients();
     this.getAllDoctors();
-    this.filteredOptions = this.patientControl.valueChanges.pipe(
+    this.filteredOptions = this.visitFormGroup.get('patient')!.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value || ''))
+      map(value => this._filterPatient(value || ''))
     );
-    this.filteredDoctors = this.doctorControl.valueChanges.pipe(
+    this.filteredDoctors = this.visitFormGroup.get('doctor')!.valueChanges.pipe(
       startWith(''),
       map(value => this._filterDoctor(value || ''))
     );
   }
 
-  private _filter(value: any): any[] {
-    const filterValue = value;
-    return this.patientList.filter(patient => patient);
+  private _filterPatient(value: any): any[] {
+    const filterValue = String(value).toLowerCase();
+    return this.patientList.filter(patient =>
+      patient.name?.toLowerCase().includes(filterValue)
+    );
   }
 
   private _filterDoctor(value: any): any[] {
-    const filterValue = value;
-    return this.doctorList.filter(doctor => doctor);
+    if (!value) return this.doctorList;
+    const filterValue = String(value).toLowerCase();
+    return this.doctorList.filter(doctor =>
+      doctor.name?.toLowerCase().includes(filterValue)
+    );
   }
 
-  firstFormGroup = this._formBuilder.group({
-    patient: this.patientControl,
-    doctor: this.doctorControl,
-    date: ['', Validators.required],
-  });
-
-  isLinear = true;
-
+  //TODO extract to patient service
   getAllPatients() {
     this.http.get<any[]>('http://localhost:8080/patients').subscribe({
       next: (response) => {
@@ -89,6 +107,7 @@ export class AddVisitComponent implements OnInit {
     });
   }
 
+  //TODO extract to patient service
   getAllDoctors() {
     this.http.get<any[]>('http://localhost:8080/doctors').subscribe({
       next: (response) => {
@@ -102,10 +121,11 @@ export class AddVisitComponent implements OnInit {
 
   addVisit() {
     const visitData = {
-      name: this.firstFormGroup.value.patient,
-      surname: this.firstFormGroup.value.doctor,
-      date: this.firstFormGroup.value.date,
+      patient_id: this.visitFormGroup.value.patient?.id,
+      doctor_id: this.visitFormGroup.value.doctor?.id,
+      date: this.visitFormGroup.value.date,
     };
+    console.log(visitData);
     this.http.post('http://localhost:8080/visits', visitData).subscribe({
       next: (response) => {
         console.log('Wizyta dodana:', response);
@@ -117,7 +137,7 @@ export class AddVisitComponent implements OnInit {
     });
   }
 
-  displayFn(patient: any): string {
+  displayPatientFn(patient: any): string {
     return patient ? `${patient.name} ${patient.surname} Pesel: ${patient.ssn}` : '';
   }
 
@@ -125,5 +145,11 @@ export class AddVisitComponent implements OnInit {
     return doctor ? `${doctor.name} ${doctor.surname}` : '';
   }
 
-  protected readonly JSON = JSON;
+  setPatient(patient: Patient) {
+    this.visitFormGroup.get('patient')?.setValue(patient);
+  }
+
+  setDoctor(doctor: Doctor) {
+    this.visitFormGroup.get('doctor')?.setValue(doctor);
+  }
 }

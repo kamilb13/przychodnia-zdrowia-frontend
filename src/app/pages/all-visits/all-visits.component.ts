@@ -1,11 +1,11 @@
 import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {
-  MatCell,
+  MatCell, MatCellDef,
   MatColumnDef,
-  MatHeaderCell,
-  MatHeaderRow,
-  MatRow,
+  MatHeaderCell, MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
@@ -15,6 +15,7 @@ import {MatInput} from '@angular/material/input';
 import {NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-all-visits',
@@ -31,7 +32,12 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     NgIf,
     ReactiveFormsModule,
     FormsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatButton,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRowDef,
+    MatRowDef
   ],
   templateUrl: './all-visits.component.html',
   styleUrl: './all-visits.component.scss'
@@ -40,7 +46,7 @@ export class AllVisitsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private http = inject(HttpClient);
   visits: any[] = [];
-  displayedColumns: string[] = ['id', 'healthRecord', 'patient', 'doctor', 'actions'];
+  displayedColumns: string[] = ['id', 'date', 'patient', 'doctor', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

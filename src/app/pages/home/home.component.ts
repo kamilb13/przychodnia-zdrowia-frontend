@@ -10,7 +10,6 @@ import {AllPatientsComponent} from '../all-patients/all-patients.component';
     MatCardTitle,
     MatCardHeader,
     MatCardContent,
-    AllPatientsComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
