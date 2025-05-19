@@ -17,6 +17,18 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="time">
+    <th mat-header-cell *matHeaderCellDef>Godzina</th>
+    <td mat-cell *matCellDef="let visit">
+      <ng-container *ngIf="editingVisit?.id === visit.id; else displayTime">
+        <input matInput [(ngModel)]="editingVisit.time">
+      </ng-container>
+      <ng-template #displayTime>
+        {{ visit.time }}
+      </ng-template>
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="patient">
     <th mat-header-cell *matHeaderCellDef>Pacjent</th>
     <td mat-cell *matCellDef="let visit">

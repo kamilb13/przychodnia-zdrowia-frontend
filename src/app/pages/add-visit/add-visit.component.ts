@@ -65,6 +65,7 @@ export class AddVisitComponent implements OnInit {
     patient: new FormControl<Patient | null>(null, Validators.required),
     doctor: new FormControl<Doctor | null>(null, Validators.required),
     date: new FormControl<string | null>('', Validators.required),
+    time: new FormControl<string | null>('', Validators.required),
   });
 
   ngOnInit() {
@@ -124,10 +125,12 @@ export class AddVisitComponent implements OnInit {
       patient_id: this.visitFormGroup.value.patient?.id,
       doctor_id: this.visitFormGroup.value.doctor?.id,
       date: this.visitFormGroup.value.date,
+      time: this.visitFormGroup.value.time,
     };
     console.log(visitData);
     this.http.post('http://localhost:8080/visits', visitData).subscribe({
       next: (response) => {
+        alert("Dodano wizytę")
         console.log('Wizyta dodana:', response);
       },
       error: (error) => {

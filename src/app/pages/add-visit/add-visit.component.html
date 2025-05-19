@@ -1,6 +1,6 @@
 <h3>Dodaj nową wizytę</h3>
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step [stepControl]="visitFormGroup" label="Uzupełnij imię i nazwisko doktora">
+  <mat-step [stepControl]="visitFormGroup" label="Uzupełnij informacje o wizycie">
     <form [formGroup]="visitFormGroup">
       <div style="display: flex; flex-direction: column; align-items: flex-start">
         <form class="example-form">
@@ -43,6 +43,10 @@
           <mat-label>Data wizyty</mat-label>
           <input matInput type="date" placeholder="Data wizyty" formControlName="date" required>
         </mat-form-field>
+        <mat-form-field>
+          <mat-label>Godzina wizyty</mat-label>
+          <input matInput type="time" placeholder="Godzina wizyty" formControlName="time" required>
+        </mat-form-field>
       </div>
     </form>
     <div>
@@ -58,11 +62,12 @@
       <li><strong>Imię doktora:</strong> {{ visitFormGroup.value.doctor?.name }}</li>
       <li><strong>Nazwisko doktora:</strong> {{ visitFormGroup.value.doctor?.surname }}</li>
       <li><strong>Data wizyty:</strong> {{ visitFormGroup.value.date }}</li>
+      <li><strong>Godzina wizyty:</strong> {{ visitFormGroup.value.time }}</li>
     </ul>
     <div>
       <button mat-button matStepperPrevious>Wstecz</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
-      <button mat-button (click)="addVisit()">Zarejestruj nowego doktora</button>
+      <button mat-button (click)="addVisit()">Zarejestruj nową wizytę</button>
       <!--TODO po dodaniu doktora przycisk ma zniknąć -->
     </div>
   </mat-step>

@@ -46,7 +46,7 @@ export class AllVisitsComponent implements OnInit {
   private snackBar = inject(MatSnackBar);
   private http = inject(HttpClient);
   visits: any[] = [];
-  displayedColumns: string[] = ['id', 'date', 'patient', 'doctor', 'actions'];
+  displayedColumns: string[] = ['id', 'date', 'time', 'patient', 'doctor', 'actions'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
