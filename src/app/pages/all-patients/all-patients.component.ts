@@ -33,6 +33,7 @@ import {MatButton} from '@angular/material/button';
     MatInput,
     NgIf,
     FormsModule,
+    MatButton,
   ],
   templateUrl: './all-patients.component.html',
   styleUrl: './all-patients.component.scss'

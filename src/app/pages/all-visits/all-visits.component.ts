@@ -11,8 +11,8 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatInput} from '@angular/material/input';
-import {NgIf} from '@angular/common';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {AsyncPipe, NgForOf, NgIf} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatButton} from '@angular/material/button';
@@ -37,7 +37,7 @@ import {MatButton} from '@angular/material/button';
     MatHeaderCellDef,
     MatCellDef,
     MatHeaderRowDef,
-    MatRowDef
+    MatRowDef,
   ],
   templateUrl: './all-visits.component.html',
   styleUrl: './all-visits.component.scss'
