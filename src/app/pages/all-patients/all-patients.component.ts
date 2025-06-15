@@ -86,6 +86,7 @@ export class AllPatientsComponent implements OnInit {
         this.getAllPatients();
       },
       error: (error) => {
+        console.error(error)
         this.snackBar.open('Wystąpił błąd przy usuwaniu pacjenta', 'Zamknij', {
           duration: 4000,
         });

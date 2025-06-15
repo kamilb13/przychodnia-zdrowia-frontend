@@ -8,6 +8,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
 import {map, Observable, startWith} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 interface Patient {
   id: number;
@@ -53,6 +54,7 @@ export class AddVisitComponent implements OnInit {
 
   private _formBuilder = inject(FormBuilder);
   private http = inject(HttpClient);
+  private snackBar = inject(MatSnackBar);
 
   patientList: any[] = [];
   doctorList: any[] = [];
@@ -130,12 +132,14 @@ export class AddVisitComponent implements OnInit {
     console.log(visitData);
     this.http.post('http://localhost:8080/visits', visitData).subscribe({
       next: (response) => {
-        alert("Dodano wizytę")
-        console.log('Wizyta dodana:', response);
+        this.snackBar.open('Wizyta została pomyślnie zarejestrowana', 'Zamknij', {
+          duration: 3000,
+        });
+        this.stepper.reset();
       },
       error: (error) => {
         console.error('Błąd dodawania wizyty:', error);
-        //TODO dodac obsluge bledow widoczna dla uzytkownika
+        alert("Błąd dodawania wizyty");
       }
     });
   }
